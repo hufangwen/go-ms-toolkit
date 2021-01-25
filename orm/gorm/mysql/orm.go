@@ -8,8 +8,8 @@ package mysql
 
 import (
 	"fmt"
-	"git.forms.io/universe/rapm/orm/tdorm/go-ms-toolkit/qyenv"
-	"github.com/dipperin/go-ms-toolkit/log"
+	"github.com/hufangwen/go-ms-toolkit/qyenv"
+	"github.com/hufangwen/go-ms-toolkit/log"
 	"reflect"
 	"strings"
 	"time"
@@ -17,7 +17,7 @@ import (
 	"github.com/jinzhu/gorm"
 	"go.uber.org/zap"
 
-	"git.forms.io/universe/rapm/orm/tdorm/go-ms-toolkit/db-config"
+	"github.com/hufangwen/go-ms-toolkit/db-config"
 )
 
 type gormMysql struct {

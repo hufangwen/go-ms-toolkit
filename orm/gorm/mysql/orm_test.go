@@ -12,7 +12,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/stretchr/testify/assert"
 
-	dbConfig "git.forms.io/universe/rapm/orm/gorm/go-ms-toolkit/db-config"
+	dbConfig "github.com/hufangwen/go-ms-toolkit/db-config"
 )
 
 func Test_newGormMysql(t *testing.T) {

@@ -8,15 +8,15 @@ package tdengine
 
 import (
 	"fmt"
-	"git.forms.io/universe/rapm/orm/tdorm/go-ms-toolkit/qyenv"
-	"github.com/dipperin/go-ms-toolkit/log"
+	"github.com/hufangwen/go-ms-toolkit/qyenv"
+	"github.com/hufangwen/go-ms-toolkit/log"
 	"strings"
 	"time"
 
 	"github.com/jinzhu/gorm"
 	"go.uber.org/zap"
 
-	db_config "git.forms.io/universe/rapm/orm/tdorm/go-ms-toolkit/db-config"
+	db_config "github.com/hufangwen/go-ms-toolkit/db-config"
 )
 
 type gormTDengine struct {

@@ -6,7 +6,7 @@
 */
 package mysql
 
-import db_config "git.forms.io/universe/rapm/orm/tdorm/go-ms-toolkit/db-config"
+import db_config "github.com/hufangwen/go-ms-toolkit/db-config"
 
 func MakeDBUtil(dbConfig *db_config.DbConfig) DBUtil {
 	return newGormMysql(dbConfig, true)

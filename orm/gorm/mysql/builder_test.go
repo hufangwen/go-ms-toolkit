@@ -9,7 +9,7 @@ package mysql
 
 
 import (
-	db_config "git.forms.io/universe/rapm/orm/gorm/go-ms-toolkit/db-config"
+	db_config "github.com/hufangwen/go-ms-toolkit/db-config"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
