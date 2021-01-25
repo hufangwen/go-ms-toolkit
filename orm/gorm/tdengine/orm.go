@@ -15,6 +15,7 @@ import (
 
 	"github.com/jinzhu/gorm"
 	"go.uber.org/zap"
+	_ "github.com/taosdata/driver-go/taosSql"
 
 	db_config "github.com/hufangwen/go-ms-toolkit/db-config"
 )
