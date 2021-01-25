@@ -7,7 +7,10 @@
 package tdengine
 
 
-import db_config "github.com/hufangwen/go-ms-toolkit/db-config"
+import (
+	db_config "github.com/hufangwen/go-ms-toolkit/db-config"
+	_ "github.com/taosdata/driver-go/taosSql"
+)
 
 func MakeDBUtil(dbConfig *db_config.DbConfig) DBUtil {
 	return newGormTDengine(dbConfig, true)

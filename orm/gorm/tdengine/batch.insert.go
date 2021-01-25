@@ -11,7 +11,7 @@ import (
 	"reflect"
 	"strings"
 	"time"
-
+	_ "github.com/taosdata/driver-go/taosSql"
 	"github.com/jinzhu/gorm"
 )
 
