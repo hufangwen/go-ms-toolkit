@@ -134,7 +134,7 @@ func (gm *gormTDengine) initGormDB() {
 	log.QyLogger.Info("init db connection: ", zap.String("db_host", gm.dbConfig.Host),
 		zap.String("db_name", gm.dbConfig.DbName), zap.String("user", gm.dbConfig.Username))
 
-	openedDb, err := gorm.Open("taosSql","%s:%s@/tcp(%s:%s)/%s?interpolateParams=true", gm.dbConfig.Username, gm.dbConfig.Password, gm.dbConfig.Host, gm.dbConfig.Port, gm.dbConfig.DbName)
+	openedDb, err := gorm.Open("taosSql",fmt.Sprintf("%s:%s@/tcp(%s:%s)/%s?interpolateParams=true", gm.dbConfig.Username, gm.dbConfig.Password, gm.dbConfig.Host, gm.dbConfig.Port, gm.dbConfig.DbName))
 	if err != nil {
 		panic("数据库连接出错：" + err.Error())
 	}
