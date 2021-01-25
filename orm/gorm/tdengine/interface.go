@@ -21,4 +21,5 @@ type DB interface {
 	GetDB() *gorm.DB
 	ClearAllData()
 	Create(value interface{}) error
+	BulkInsert(value interface{}) error
 }

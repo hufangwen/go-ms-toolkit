@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"github.com/hufangwen/go-ms-toolkit/qyenv"
 	"github.com/hufangwen/go-ms-toolkit/log"
+	"reflect"
 	"strings"
 	"time"
 
@@ -97,9 +98,18 @@ func (gm *gormTDengine) ClearAllData() {
 		panic("非法操作！在非测试环境下调用了清空所有数据的方法")
 	}
 }
-// TDOD 支持多种并发写入
+// TODO 支持多种并发写入
 func (gm *gormTDengine) Create(value interface{}) error {
 	return gm.GetDB().Exec(value.(string)).Error
+}
+
+
+func (gm *gormTDengine) BulkInsert(value interface{}) error {
+	//先判断是不是数组 如果不是
+	if kind := reflect.TypeOf(value).Kind(); kind != reflect.Slice || kind != reflect.Array {
+		return gm.GetDB().Create(value).Error
+	}
+	return nil
 }
 
 func newGormTDengine(dbConfig *db_config.DbConfig, forUtil bool) *gormTDengine {
