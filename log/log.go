@@ -2,7 +2,7 @@ package log
 
 import (
 	"fmt"
-	"github.com/dipperin/go-ms-toolkit/qyenv"
+	"github.com/hufangwen/go-ms-toolkit/qyenv"
 	"github.com/natefinch/lumberjack"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"

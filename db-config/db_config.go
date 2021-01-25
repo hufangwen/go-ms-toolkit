@@ -2,7 +2,7 @@ package db_config
 
 import (
 	"fmt"
-	"github.com/dipperin/go-ms-toolkit/qyenv"
+	"github.com/hufangwen/go-ms-toolkit/qyenv"
 	"io/ioutil"
 	"strings"
 )
