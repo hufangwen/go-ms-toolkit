@@ -114,7 +114,7 @@ func newGormTDengine(dbConfig *db_config.DbConfig, forUtil bool) *gormTDengine {
 
 	return gm
 }
-
+// 这里找时间优化一下下 todo 连接多个库的配置
 func (gm *gormTDengine) initGormDB() {
 	if gm.db != nil {
 		panic("gorm db should nil")
@@ -123,7 +123,7 @@ func (gm *gormTDengine) initGormDB() {
 	log.QyLogger.Info("init db connection: ", zap.String("db_host", gm.dbConfig.Host),
 		zap.String("db_name", gm.dbConfig.DbName), zap.String("user", gm.dbConfig.Username))
 
-	openedDb, err := gorm.Open("%s:%s@tcp(%s:%s)/%s?interpolateParams=true", gm.dbConfig.Username, gm.dbConfig.Password, gm.dbConfig.Host, gm.dbConfig.Port, gm.dbConfig.DbName)
+	openedDb, err := gorm.Open("taosSql","%s:%s@tcp(%s:%s)/%s?interpolateParams=true", gm.dbConfig.Username, gm.dbConfig.Password, gm.dbConfig.Host, gm.dbConfig.Port, gm.dbConfig.DbName)
 	if err != nil {
 		panic("数据库连接出错：" + err.Error())
 	}
