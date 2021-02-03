@@ -7,18 +7,22 @@
 package common
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"os/exec"
+	"github.com/go-cmd/cmd"
 	"time"
 )
 
+
+// 自带的垃圾 TODO 废弃
 func Shell(command string) ([]byte, error) {
 	cmd := exec.Command("sh", "-c", command)
 	return cmd.Output()
 }
 
-
+// 废弃
 func ShellWithTimeout(command string, timeout int) ([]byte, error) {
 	if "" == command {
 		return nil, nil
@@ -46,4 +50,21 @@ func ShellWithTimeout(command string, timeout int) ([]byte, error) {
 			return nil, errors.New(done)
 		}
 	}
+}
+
+func GoShell(shell string) []string {
+	c := cmd.NewCmd("bash","-c",shell)
+	<-c.Start()
+	return c.Status().Stdout
+}
+
+func TimeoutGoShell(timeout time.Duration,	shell string) ([]byte,error) {
+	ctx, cancel := context.WithTimeout(context.Background(), timeout*time.Second)
+	defer cancel()
+
+	cmdarray := []string{"-c", fmt.Sprintf("%s", shell)}
+	cmd := exec.CommandContext(ctx, "bash", cmdarray...)
+	out, err := cmd.CombinedOutput()
+	return out,err
+
 }
