@@ -19,3 +19,7 @@ func MakeDBUtil(dbConfig *db_config.DbConfig) DBUtil {
 func MakeDB(dbConfig *db_config.DbConfig) DB {
 	return newGormTDengine(dbConfig, false)
 }
+
+func MakeTDb(dbConfig *db_config.DbConfig) DB {
+	return InitConnect(dbConfig)
+}

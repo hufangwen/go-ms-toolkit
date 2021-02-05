@@ -8,15 +8,15 @@ package tdengine
 
 import (
 	"fmt"
-	"github.com/hufangwen/go-ms-toolkit/qyenv"
 	"github.com/hufangwen/go-ms-toolkit/log"
+	"github.com/hufangwen/go-ms-toolkit/qyenv"
 	"reflect"
 	"strings"
 	"time"
 
 	"github.com/jinzhu/gorm"
-	"go.uber.org/zap"
 	_ "github.com/taosdata/driver-go/taosSql"
+	"go.uber.org/zap"
 
 	db_config "github.com/hufangwen/go-ms-toolkit/db-config"
 )
@@ -98,11 +98,11 @@ func (gm *gormTDengine) ClearAllData() {
 		panic("非法操作！在非测试环境下调用了清空所有数据的方法")
 	}
 }
+
 // TODO 支持多种并发写入
 func (gm *gormTDengine) Create(value interface{}) error {
 	return gm.GetDB().Exec(value.(string)).Error
 }
-
 
 func (gm *gormTDengine) BulkInsert(value interface{}) error {
 	//先判断是不是数组 如果不是
@@ -125,7 +125,38 @@ func newGormTDengine(dbConfig *db_config.DbConfig, forUtil bool) *gormTDengine {
 
 	return gm
 }
-// 这里找时间优化一下下 todo 连接多个库的配置
+// 该连接并没有指定特定的db
+func InitConnect(dbConfig *db_config.DbConfig,) *gormTDengine {
+	gm := &gormTDengine{dbConfig: dbConfig}
+	gm.tdEngineConnect()
+	return gm
+}
+
+func (gm *gormTDengine) tdEngineConnect()  {
+	log.QyLogger.Info("init db connection: ", zap.String("db_host", gm.dbConfig.Host),
+		zap.String("db_name", gm.dbConfig.DbName), zap.String("user", gm.dbConfig.Username))
+
+	openedDb, err := gorm.Open("taosSql", fmt.Sprintf("%s:%s@/tcp(%s:%s)?interpolateParams=true", gm.dbConfig.Username, gm.dbConfig.Password, gm.dbConfig.Host, gm.dbConfig.Port))
+	if err != nil {
+		panic("数据库连接出错：" + err.Error())
+	}
+	openedDb.DB().SetMaxIdleConns(gm.dbConfig.MaxIdleConns)
+	openedDb.DB().SetMaxOpenConns(gm.dbConfig.MaxOpenConns)
+	// 避免久了不使用，导致连接被mysql断掉的问题
+	openedDb.DB().SetConnMaxLifetime(time.Hour * 1)
+	// 如果不是生产数据库则打开详细日志
+	// if !strings.Contains(dbConfig.DbName, "prod") {
+	if substr(gm.dbConfig.DbName, len(gm.dbConfig.DbName)-4, 4) != "prod" {
+		openedDb.LogMode(true)
+	}
+
+	gm.db = openedDb
+}
+
+
+
+
+// 这里找时间优化一下下
 func (gm *gormTDengine) initGormDB() {
 	if gm.db != nil {
 		panic("gorm db should nil")
@@ -134,7 +165,7 @@ func (gm *gormTDengine) initGormDB() {
 	log.QyLogger.Info("init db connection: ", zap.String("db_host", gm.dbConfig.Host),
 		zap.String("db_name", gm.dbConfig.DbName), zap.String("user", gm.dbConfig.Username))
 
-	openedDb, err := gorm.Open("taosSql",fmt.Sprintf("%s:%s@/tcp(%s:%s)/%s?interpolateParams=true", gm.dbConfig.Username, gm.dbConfig.Password, gm.dbConfig.Host, gm.dbConfig.Port, gm.dbConfig.DbName))
+	openedDb, err := gorm.Open("taosSql", fmt.Sprintf("%s:%s@/tcp(%s:%s)/%s?interpolateParams=true", gm.dbConfig.Username, gm.dbConfig.Password, gm.dbConfig.Host, gm.dbConfig.Port, gm.dbConfig.DbName))
 	if err != nil {
 		panic("数据库连接出错：" + err.Error())
 	}
