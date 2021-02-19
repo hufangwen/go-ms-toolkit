@@ -16,6 +16,7 @@ type DbConfig struct {
 	MaxIdleConns int
 	MaxOpenConns int
 	DbCharset    string
+	LogMode bool
 }
 
 // 只能通过这种方式获取配置对象

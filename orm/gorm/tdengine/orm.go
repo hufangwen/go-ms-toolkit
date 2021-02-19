@@ -144,11 +144,7 @@ func (gm *gormTDengine) tdEngineConnect()  {
 	openedDb.DB().SetMaxOpenConns(gm.dbConfig.MaxOpenConns)
 	// 避免久了不使用，导致连接被mysql断掉的问题
 	openedDb.DB().SetConnMaxLifetime(time.Hour * 1)
-	// 如果不是生产数据库则打开详细日志
-	// if !strings.Contains(dbConfig.DbName, "prod") {
-	if substr(gm.dbConfig.DbName, len(gm.dbConfig.DbName)-4, 4) != "prod" {
-		openedDb.LogMode(true)
-	}
+		openedDb.LogMode(gm.dbConfig.LogMode)
 
 	gm.db = openedDb
 }
