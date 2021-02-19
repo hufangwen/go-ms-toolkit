@@ -12,7 +12,6 @@
 *.out
 .DS_Store
 
-vendor
 
 .idea/
 .vscode
