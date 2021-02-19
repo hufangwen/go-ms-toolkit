@@ -136,7 +136,7 @@ func (gm *gormTDengine) tdEngineConnect()  {
 	log.QyLogger.Info("init db connection: ", zap.String("db_host", gm.dbConfig.Host),
 		zap.String("db_name", gm.dbConfig.DbName), zap.String("user", gm.dbConfig.Username))
 
-	openedDb, err := gorm.Open("taosSql", fmt.Sprintf("%s:%s@/tcp(%s:%s)?interpolateParams=true", gm.dbConfig.Username, gm.dbConfig.Password, gm.dbConfig.Host, gm.dbConfig.Port))
+	openedDb, err := gorm.Open("taosSql", fmt.Sprintf("%s:%s@/tcp(%s:%s)/", gm.dbConfig.Username, gm.dbConfig.Password, gm.dbConfig.Host, gm.dbConfig.Port))
 	if err != nil {
 		panic("数据库连接出错：" + err.Error())
 	}
@@ -144,7 +144,7 @@ func (gm *gormTDengine) tdEngineConnect()  {
 	openedDb.DB().SetMaxOpenConns(gm.dbConfig.MaxOpenConns)
 	// 避免久了不使用，导致连接被mysql断掉的问题
 	openedDb.DB().SetConnMaxLifetime(time.Hour * 1)
-		openedDb.LogMode(gm.dbConfig.LogMode)
+	openedDb.LogMode(gm.dbConfig.LogMode)
 
 	gm.db = openedDb
 }
