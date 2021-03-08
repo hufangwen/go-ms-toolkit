@@ -118,7 +118,7 @@ func (gm *gormMysql) Create(value interface{}) error {
 func newGormMysql(dbConfig *db_config.DbConfig, forUtil bool) *gormMysql {
 	gm := &gormMysql{dbConfig: dbConfig}
 	// is exit create db
-
+	createDb(dbConfig)
 	if forUtil {
 		gm.initCdDb()
 		return gm
