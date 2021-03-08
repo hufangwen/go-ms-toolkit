@@ -117,6 +117,7 @@ func (gm *gormMysql) Create(value interface{}) error {
 
 func newGormMysql(dbConfig *db_config.DbConfig, forUtil bool) *gormMysql {
 	gm := &gormMysql{dbConfig: dbConfig}
+	// is exit create db
 
 	if forUtil {
 		gm.initCdDb()
@@ -127,6 +128,17 @@ func newGormMysql(dbConfig *db_config.DbConfig, forUtil bool) *gormMysql {
 	gm.initGormDB()
 
 	return gm
+}
+
+func createDb(gm *db_config.DbConfig)  {
+	db, err := gorm.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=True&loc=Local", gm.Username, gm.Password, gm.Host, gm.Port, "mysql", gm.DbCharset))
+	if err != nil {
+		panic(err)
+	}
+	defer func() { _ = db.Close() }() //数据库创建之后直接关闭该连接
+	if err = db.Exec("create database if not exists " + gm.DbName + " Character Set UTF8;").Error; err != nil {
+		panic(err)
+	}
 }
 
 func (gm *gormMysql) initGormDB() {
