@@ -19,7 +19,6 @@ require (
 	github.com/robfig/cron v1.2.0
 	github.com/stretchr/testify v1.4.0
 	github.com/taosdata/driver-go v0.0.0-20210122084852-b1e6b3f0afa3
-	github.com/yinjk/common v0.0.0-20210128095655-132b204c1155
 	go.uber.org/zap v1.16.0
 	google.golang.org/appengine v1.6.7 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect

@@ -24,11 +24,9 @@ github.com/robfig/cron
 github.com/stretchr/testify/assert
 # github.com/taosdata/driver-go v0.0.0-20210122084852-b1e6b3f0afa3
 github.com/taosdata/driver-go/taosSql
-# github.com/yinjk/common v0.0.0-20210128095655-132b204c1155
-github.com/yinjk/common/log
-# go.uber.org/atomic v1.7.0
+# go.uber.org/atomic v1.6.0
 go.uber.org/atomic
-# go.uber.org/multierr v1.6.0
+# go.uber.org/multierr v1.5.0
 go.uber.org/multierr
 # go.uber.org/zap v1.16.0
 go.uber.org/zap

@@ -81,7 +81,9 @@ func Open(dialect string, args ...interface{}) (db *DB, err error) {
 	}
 	// Send a ping to make sure the database connection is alive.
 	if d, ok := dbSQL.(*sql.DB); ok {
-	
+		if err = d.Ping(); err != nil && ownDbSQL {
+			d.Close()
+		}
 	}
 	return
 }
