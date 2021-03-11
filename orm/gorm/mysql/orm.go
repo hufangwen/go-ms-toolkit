@@ -159,10 +159,9 @@ func (gm *gormMysql) initGormDB() {
 	openedDb.DB().SetConnMaxLifetime(time.Hour * 1)
 	// 如果不是生产数据库则打开详细日志
 	// if !strings.Contains(dbConfig.DbName, "prod") {
-	if substr(gm.dbConfig.DbName, len(gm.dbConfig.DbName)-4, 4) != "prod" {
+	if gm.dbConfig.LogMode{
 		openedDb.LogMode(true)
 	}
-
 	gm.db = openedDb
 }
 
