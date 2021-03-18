@@ -12,6 +12,6 @@ import (
 	_ "github.com/taosdata/driver-go/taosSql"
 )
 
-func MakeTDb(dbConfig *db_config.DbConfig) DB {
+func MakeTDb(dbConfig *db_config.DbConfig) *gormTDengine {
 	return InitConnect(dbConfig)
 }
