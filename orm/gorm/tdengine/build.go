@@ -12,14 +12,6 @@ import (
 	_ "github.com/taosdata/driver-go/taosSql"
 )
 
-func MakeDBUtil(dbConfig *db_config.DbConfig) DBUtil {
-	return newGormTDengine(dbConfig, true)
-}
-
-func MakeDB(dbConfig *db_config.DbConfig) DB {
-	return newGormTDengine(dbConfig, false)
-}
-
 func MakeTDb(dbConfig *db_config.DbConfig) DB {
 	return InitConnect(dbConfig)
 }
