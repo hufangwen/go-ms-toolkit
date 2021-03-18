@@ -105,3 +105,20 @@ func (gm *gormTDengine)Exec(query string, args ...interface{}) (sql.Result, erro
 	}
 	return gm.DB.Exec(query,args)
 }
+
+func (gm *gormTDengine)QueryMap(query string, args ...interface{})(map[string]interface{},error) {
+	var reset map[string]interface{}
+	if gm.logModel{
+		fmt.Sprintf(strings.ReplaceAll(query,"?","%v"),args)
+	}
+	rows,err := gm.DB.Query(query,args)
+	if err != nil{
+		fmt.Sprintf("query map error = %v",err)
+		return nil, err
+	}
+	unm,err := rows.Columns()
+	for k,_ :=  range unm{
+		fmt.Sprintf(k)
+	}
+
+}
