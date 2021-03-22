@@ -20,6 +20,6 @@ require (
 	github.com/stretchr/testify v1.4.0
 	github.com/taosdata/driver-go v0.0.0-20210122084852-b1e6b3f0afa3
 	go.uber.org/zap v1.16.0
-	google.golang.org/appengine v1.6.7 // indirect
+	google.golang.org/appengine v1.6.7
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 )
