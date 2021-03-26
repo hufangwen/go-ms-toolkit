@@ -39,7 +39,7 @@ func Test_gormTDengine_QueryStruct(t *testing.T) {
 	db := InitConnect(&db_config.DbConfig{
 		Username: "root",
 		Password:"taosdata",
-		Host:"10.10.10.159",
+		Host:"sirius1",
 		Port:"6030",
 		MaxIdleConns:100,
 		MaxOpenConns:10,

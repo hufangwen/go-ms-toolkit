@@ -7,6 +7,7 @@
 package tdengine
 
 import (
+	"database/sql"
 	"github.com/jinzhu/gorm"
 	_ "github.com/taosdata/driver-go/taosSql"
 )
@@ -23,3 +24,16 @@ type DB interface {
 	Create(value interface{}) error
 	BulkInsert(value interface{}) error
 }
+
+type TdengineDb interface {
+	CreateDB() error
+	DropDB() error
+	GetDB() *sql.DB
+	Create(value interface{}) error
+	Query(query string, args ...interface{}) (*sql.Rows, error)
+	QueryRow(query string, args ...interface{}) *sql.Row
+	Exec(query string, args ...interface{}) (sql.Result, error)
+	QueryMap(query string, args ...interface{})([]map[string]interface{},error)
+	QueryStruct(obj interface{},query string, args ...interface{}) error
+}
+

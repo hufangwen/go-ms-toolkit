@@ -27,30 +27,32 @@ type gormTDengine struct {
 	logModel bool
 }
 
-func (gm *gormTDengine) CreateDB() {
+func (gm *gormTDengine) CreateDB() error{
 	createDbSQL := "CREATE DATABASE IF NOT EXISTS " + gm.dbConfig.DbName + " DEFAULT CHARSET utf8 COLLATE utf8_general_ci;"
 
 	_,err := gm.Exec(createDbSQL)
 	if err != nil {
 		fmt.Println("创建失败：" + err.Error() + " sql:" + createDbSQL)
-		return
+		return errors.New("create db error sql := "+createDbSQL)
 	}
 	fmt.Println(gm.dbConfig.DbName + "数据库创建成功")
+	return nil
 }
 
-func (gm *gormTDengine) DropDB() {
+func (gm *gormTDengine) DropDB() error {
 	dropDbSQL := "DROP DATABASE IF EXISTS " + gm.dbConfig.DbName + ";"
 
 	_,err := gm.Exec(dropDbSQL)
 	if err != nil {
 		fmt.Println("删除失败：" + err.Error() + " sql:" + dropDbSQL)
-		return
+		return errors.New("drop db error sql := "+dropDbSQL)
 	}
 	fmt.Println(gm.dbConfig.DbName + "数据库删除成功")
+	return nil
 }
 
-func (gm *gormTDengine) GetDB() *gormTDengine {
-	return gm
+func (gm *gormTDengine) GetDB() *sql.DB {
+	return gm.DB
 }
 
 
@@ -62,7 +64,7 @@ func (gm *gormTDengine) Create(value interface{}) error {
 
 
 // 该连接并没有指定特定的db
-func InitConnect(dbConfig *db_config.DbConfig) *gormTDengine {
+func InitConnect(dbConfig *db_config.DbConfig) TdengineDb {
 	gm := &gormTDengine{dbConfig: dbConfig}
 	gm.tdEngineConnect()
 	return gm
